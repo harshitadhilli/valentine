@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Love</title>
+    <style>
+        /* Aesthetic Pink Theme */
+        body {
+            background-color: #fff0f5; /* Lavender Blush (very pale pink) */
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Georgia', serif; /* Classic font */
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .card {
+            background: white;
+            padding: 50px;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(255, 182, 193, 0.5);
+            z-index: 10;
+            border: 2px solid #ffb6c1;
+        }
+
+        h1 {
+            color: #ffb6c1; /* Baby Pink */
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            height: 50px;
+        }
+
+        button {
+            padding: 10px 25px;
+            font-size: 1.2rem;
+            border-radius: 15px;
+            border: none;
+            cursor: pointer;
+            font-family: 'Georgia', serif;
+            transition: 0.3s;
+        }
+
+        #yesBtn {
+            background-color: #ffb6c1;
+            color: white;
+        }
+
+        #noBtn {
+            background-color: #ffd1dc;
+            color: white;
+            position: absolute; /* Needed for the jump effect */
+        }
+
+        /* Floating Hearts */
+        .heart {
+            position: absolute;
+            color: #ffb6c1;
+            font-size: 20px;
+            animation: float 4s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h1 id="text">Will you be my Valentine?</h1>
+        <div class="buttons">
+            <button id="yesBtn" onclick="accept()">Yes</button>
+            <button id="noBtn" onmouseover="moveButton()">No</button>
+        </div>
+    </div>
+
+    <script>
+        // Floating hearts generator
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤';
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.animationDuration = Math.random() * 2 + 3 + "s";
+            document.body.appendChild(heart);
+            setTimeout(() => { heart.remove(); }, 4000);
+        }
+        setInterval(createHeart, 300);
+
+        // The "Jumping" No Button Logic
+        function moveButton() {
+            const noBtn = document.getElementById('noBtn');
+            // Generate random positions
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            
+            noBtn.style.left = x + 'px';
+            noBtn.style.top = y + 'px';
+        }
+
+        // What happens when he clicks Yes
+        function accept() {
+            document.getElementById('text').innerHTML = "Congrats! You are my valentine babe! ❤️";
+            document.querySelector('.buttons').style.display = 'none';
+            // Trigger extra hearts
+            for(let i=0; i<30; i++) { setTimeout(createHeart, i*50); }
+        }
+    </script>
+</body>
+</html>
